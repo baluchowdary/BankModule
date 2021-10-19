@@ -3,16 +3,18 @@ package com.kollu.bank.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Bank_Details")
 public class Bank {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@GenericGenerator(name = "Bank_Id_id", strategy = "com.kollu.bank.util.BankIdGenerator")
+	@GeneratedValue(generator = "Bank_Id_id")  
 	@Column(name="Bank_Id")
 	private long bankId;
 	
