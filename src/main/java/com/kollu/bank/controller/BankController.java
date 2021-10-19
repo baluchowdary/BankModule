@@ -46,6 +46,18 @@ public class BankController {
 		}
 	}
 	
+/*	Get the bank details by using {bankId}*/
+	
+	@GetMapping("/{bankId}")
+	public ResponseEntity<Bank> getBankById(@PathVariable("bankId") long id) {
+		Optional<Bank> banksData = bankRepository.findById(id);
+
+		if (banksData.isPresent()) {
+			return new ResponseEntity<>(banksData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 /*Save Bank details*/
 	
