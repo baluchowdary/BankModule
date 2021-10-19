@@ -94,4 +94,24 @@ public class CustomerBankDetailsController {
 		}
 	}
 	
+/*	Get the customer bank details by using {bankId}*/
+	
+	@GetMapping("/bankCustByIdd/{bankCustId}")
+	public CustomerBank getBankCustByIdd(@PathVariable("bankCustId") long bankCustId) {
+		System.out.println("getBankCustByIdd method--- bankCustId : "+bankCustId); 
+		
+		CustomerBank custBanksData = customerBankRepository.findByBankCustId(bankCustId); 
+
+		if (custBanksData != null) {
+			return new CustomerBank(custBanksData.getBankCustId(), 
+					custBanksData.getBankCustFirstName(), custBanksData.getBankCustLastName(), custBanksData.getBankCustMobileNumber(), 
+					custBanksData.getBankCustGender(), custBanksData.getBankCustAddress(), 
+					custBanksData.getCustBankId(), custBanksData.getCustBankName(), 
+					custBanksData.getCustBankIfscCode(), custBanksData.getCustBankBranchAddress(), custBanksData.getCustBankAccountNo());	
+		} else {
+			System.out.println("customer bank else block");
+			return new CustomerBank();
+		}
+	}
+	
 }

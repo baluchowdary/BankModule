@@ -75,14 +75,14 @@ public class CustomerBank {
 		this.custBankAccountNo = custBankAccountNo;
 	}
 
-	public long getCustomerBankId() {
+	/*public long getCustomerBankId() {
 		return customerBankId;
 	}
 
 	public void setCustomerBankId(long customerBankId) {
 		this.customerBankId = customerBankId;
 	}
-
+*/
 	public long getBankCustId() {
 		return bankCustId;
 	}
@@ -173,12 +173,11 @@ public class CustomerBank {
 
 	@Override
 	public String toString() {
-		return "CustomerBank [customerBankId=" + customerBankId + ", bankCustId=" + bankCustId + ", bankCustFirstName="
-				+ bankCustFirstName + ", bankCustLastName=" + bankCustLastName + ", bankCustMobileNumber="
-				+ bankCustMobileNumber + ", bankCustGender=" + bankCustGender + ", bankCustAddress=" + bankCustAddress
-				+ ", custBankId=" + custBankId + ", custBankName=" + custBankName + ", custBankIfscCode="
-				+ custBankIfscCode + ", custBankBranchAddress=" + custBankBranchAddress + ", custBankAccountNo="
-				+ custBankAccountNo + "]";
+		return "CustomerBank [bankCustId=" + bankCustId + ", bankCustFirstName=" + bankCustFirstName
+				+ ", bankCustLastName=" + bankCustLastName + ", bankCustMobileNumber=" + bankCustMobileNumber
+				+ ", bankCustGender=" + bankCustGender + ", bankCustAddress=" + bankCustAddress + ", custBankId="
+				+ custBankId + ", custBankName=" + custBankName + ", custBankIfscCode=" + custBankIfscCode
+				+ ", custBankBranchAddress=" + custBankBranchAddress + ", custBankAccountNo=" + custBankAccountNo + "]";
 	}
 
 }
