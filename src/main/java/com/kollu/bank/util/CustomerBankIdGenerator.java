@@ -17,11 +17,13 @@ public class CustomerBankIdGenerator implements IdentifierGenerator {
 		System.out.println("i am from CustomerBankIdGenerator.generate method");
 		long prefix = 100;
 		
-		Connection connection = session.connection();
-		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null; 
 		 try {
-	            Statement statement=connection.createStatement();
-	            ResultSet rs=statement.executeQuery("select count(CUST_BANK_ID) as CUST_BANK_ID from customer_bank_details");
+			 	connection = session.connection();
+	            statement=connection.createStatement();
+	            rs=statement.executeQuery("select count(CUST_BANK_ID) as CUST_BANK_ID from customer_bank_details");
 
 	            if(rs.next()) {
 	                int id=rs.getInt(1)+1;
@@ -31,7 +33,25 @@ public class CustomerBankIdGenerator implements IdentifierGenerator {
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	        }
+	        } finally {
+	        	
+	        	if(statement != null) {
+	        		try {
+						statement.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+	        	}//stmt 
+	        	
+	        	if(rs !=null) {
+	        		try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+	        	}//rs
+	        	
+			}//finally
 		
 		return null;
 	}
