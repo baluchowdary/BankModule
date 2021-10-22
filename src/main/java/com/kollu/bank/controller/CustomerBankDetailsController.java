@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import com.kollu.bank.services.CustomerBankRepository;
 @RequestMapping("/custBank")
 public class CustomerBankDetailsController {
 
+	private Logger logger = LoggerFactory.getLogger(CustomerBankDetailsController.class);
+	
 	@Autowired
 	private CustomerBankRepository customerBankRepository;
 	
@@ -28,8 +32,10 @@ public class CustomerBankDetailsController {
 	
 	@PostMapping("/savecustbankdetails")
 	public ResponseEntity<CustomerBank> saveCustBankDetails(@RequestBody CustomerBank customerBank) {
+		System.out.println("Console:: CustomerBankDetailsController - saveCustBankDetails method");
+		logger.info("CustomerBankDetailsController - saveCustBankDetails method");
+		
 		try {
-			System.out.println("saveCustBankDetails method");
 			CustomerBank CustomerBankObj = customerBankRepository
 					.save(new CustomerBank(customerBank.getBankCustId(), 
 							customerBank.getBankCustFirstName(), customerBank.getBankCustLastName(), 
@@ -38,8 +44,13 @@ public class CustomerBankDetailsController {
 							customerBank.getCustBankIfscCode(), customerBank.getCustBankBranchAddress(), 
 							customerBank.getCustBankAccountNo())); 
 			
+			System.out.println("Console:: CustomerBankDetailsController - saveCustBankDetails CustomerBankObj :: "+CustomerBankObj);
+			logger.debug("CustomerBankDetailsController - saveCustBankDetails CustomerBankObj :: "+CustomerBankObj);
+			
 			return new ResponseEntity<>(CustomerBankObj, HttpStatus.CREATED);
 		} catch (Exception e) {
+			System.out.println("Console:: CustomerBankDetailsController - saveCustBankDetails - Error ::" +e.getMessage());
+			logger.error("CustomerBankDetailsController - saveCustBankDetails - Error :: " +e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -49,18 +60,23 @@ public class CustomerBankDetailsController {
 	
 	@GetMapping("/getAllCustBankDetails")
 	public ResponseEntity<List<CustomerBank>> getCustBankDetails(){
-		System.out.println("getCustBankDetails method");
+		System.out.println("Console:: CustomerBankDetailsController - getCustBankDetails method");
+		logger.info("CustomerBankDetailsController - getCustBankDetails method");
 		try {
 			
 		List<CustomerBank> customerBank = new ArrayList<CustomerBank>();  
 		customerBankRepository.findAll().forEach(customerBank::add);
 		
 		if (customerBank.isEmpty()) {
+			System.out.println("Console:: CustomerBankDetailsController - customerBank ::"+customerBank.size());
+			logger.info("CustomerBankDetailsController - customerBank ::" +customerBank.size());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(customerBank, HttpStatus.OK); 
 		
 	} catch (Exception e) {
+		System.out.println("Console:: CustomerBankDetailsController - getCustBankDetails - Error ::" +e.getMessage());
+		logger.error("CustomerBankDetailsController - getCustBankDetails - Error :: " +e.getMessage());
 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -70,12 +86,18 @@ public class CustomerBankDetailsController {
 	
 	@GetMapping("/{custBankId}")
 	public ResponseEntity<CustomerBank> getBankById(@PathVariable("custBankId") long id) {
-		System.out.println("getBankById method");
+		System.out.println("Console:: CustomerBankDetailsController - getBankById method");
+		logger.info("CustomerBankDetailsController - getBankById method");
+		
 		Optional<CustomerBank> custBanksData = customerBankRepository.findById(id);
 
 		if (custBanksData.isPresent()) {
+			System.out.println("Console:: CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
+			logger.info("CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
 			return new ResponseEntity<>(custBanksData.get(), HttpStatus.OK);
 		} else {
+			System.out.println("Console:: CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
+			logger.info("CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -84,12 +106,19 @@ public class CustomerBankDetailsController {
 	
 	@GetMapping("/bankCustById/{bankCustId}")
 	public ResponseEntity<CustomerBank> getBankCustById(@PathVariable("bankCustId") long bankCustId) {
-		System.out.println("getBankCustById method");
+		
+		System.out.println("Console:: CustomerBankDetailsController - getBankCustById method");
+		logger.info("CustomerBankDetailsController - getBankCustById method");
+		
 		CustomerBank custBanksData = customerBankRepository.findByBankCustId(bankCustId); 
 
 		if (custBanksData != null) {
+			System.out.println("Console:: CustomerBankDetailsController - getBankCustById custBanksData :: "+custBanksData);
+			logger.info("CustomerBankDetailsController - getBankCustById custBanksData ::"+custBanksData); 
 			return new ResponseEntity<>(custBanksData, HttpStatus.OK); 
 		} else {
+			System.out.println("Console:: CustomerBankDetailsController - getBankCustById custBanksData :: "+custBanksData);
+			logger.info("CustomerBankDetailsController - getBankCustById custBanksData ::"+custBanksData);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -97,21 +126,23 @@ public class CustomerBankDetailsController {
 /*	Get the customer bank details by using {bankId}*/
 	
 	@GetMapping("/bankCustByIdd/{bankCustId}")
-	public CustomerBank getBankCustByIdd(@PathVariable("bankCustId") long bankCustId) {
-		System.out.println("getBankCustByIdd method--- bankCustId : "+bankCustId); 
+	public ResponseEntity<CustomerBank> getBankCustByIdd(@PathVariable("bankCustId") long bankCustId) {
+		System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd method");
+		logger.info("CustomerBankDetailsController - getBankCustByIdd method"); 
+		logger.info("CustomerBankDetailsController - getBankCustByIdd bankCustId ::" +bankCustId);
 		
 		CustomerBank custBanksData = customerBankRepository.findByBankCustId(bankCustId); 
 
 		if (custBanksData != null) {
-			return new CustomerBank(custBanksData.getBankCustId(), 
-					custBanksData.getBankCustFirstName(), custBanksData.getBankCustLastName(), custBanksData.getBankCustMobileNumber(), 
-					custBanksData.getBankCustGender(), custBanksData.getBankCustAddress(), 
-					custBanksData.getCustBankId(), custBanksData.getCustBankName(), 
-					custBanksData.getCustBankIfscCode(), custBanksData.getCustBankBranchAddress(), custBanksData.getCustBankAccountNo());	
+			System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd custBanksData :: "+custBanksData);
+			logger.info("CustomerBankDetailsController - getBankCustByIdd custBanksData ::"+custBanksData); 
+			return new ResponseEntity<>(custBanksData, HttpStatus.OK); 
 		} else {
-			System.out.println("customer bank else block");
-			return new CustomerBank();
+			System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd custBanksData :: "+custBanksData);
+			logger.info("CustomerBankDetailsController - getBankCustByIdd custBanksData ::"+custBanksData);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.kollu.bank;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,18 +19,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class BankModuleApplication {
 
+	private static Logger logger = LoggerFactory.getLogger(BankModuleApplication.class);
+	
 	public static void main(String[] args) {
-		System.out.println("i am from bank main module");
+		System.out.println("Console:: i am from Bank module");
+		logger.info("i am from Bank module");
 		SpringApplication.run(BankModuleApplication.class, args);
 	}
 	
 	@Bean
 	   public Docket productApi() {
+		System.out.println("Console:: BankModuleApplication - Swagger - productApi method");
+		logger.info("BankModuleApplication - Swagger - productApi method");
 	      return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
 	         .apis(RequestHandlerSelectors.basePackage("com.kollu.bank")).build();
 	   }
 	
 	private ApiInfo apiInfo() {
+		System.out.println("Console:: BankModuleApplication - Swagger - apiInfo method");
+		logger.info("BankModuleApplication - Swagger - apiInfo method");
 		return new ApiInfoBuilder().title("Welcome! Bank Micro Service")
 				.description("Bank Micro Service Swagger Document")
 				.build();
