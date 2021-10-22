@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
+import brave.sampler.Sampler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,6 +28,7 @@ public class BankModuleApplication {
 		SpringApplication.run(BankModuleApplication.class, args);
 	}
 	
+	/*Swagger-api configuration*/
 	@Bean
 	   public Docket productApi() {
 		System.out.println("Console:: BankModuleApplication - Swagger - productApi method");
@@ -42,4 +44,15 @@ public class BankModuleApplication {
 				.description("Bank Micro Service Swagger Document")
 				.build();
 	}
+	
+	/*Distributed Tracing/Zipkin*/
+	
+	@Bean
+	public Sampler defaultSampler() {
+		System.out.println("Console:: BankModuleApplication - defaultSampler method");
+		logger.info("BankModuleApplication - defaultSampler method");
+	    return Sampler.ALWAYS_SAMPLE;
+	}
+	
+	
 }
