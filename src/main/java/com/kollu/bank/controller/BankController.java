@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kollu.bank.exception.RecordNotFoundException;
 import com.kollu.bank.model.Bank;
 import com.kollu.bank.services.BankRepository;
+
+import net.bytebuddy.implementation.bytecode.Throw;
 
 @RestController
 @RequestMapping("/bank")
@@ -47,7 +50,8 @@ public class BankController {
 		if (banks.isEmpty()) {
 			System.out.println("Console:: BankController - getBankDetails - banks data size ::"+banks.size());
 			logger.debug("BankController - getBankDetails - banks data ::"); 
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new RecordNotFoundException("Bank details not avilable at this time.");
+			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(banks, HttpStatus.OK); 
 		
@@ -75,7 +79,8 @@ public class BankController {
 		} else {
 			System.out.println("Console:: BankController - getBankById banksData is present ::"+banksData.isPresent());
 			logger.info("BankController - getBankById banksData is present ::"+banksData.isPresent());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Provided bank id not avilable.");
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -125,7 +130,8 @@ public class BankController {
 		} else {
 			System.out.println("Console:: BankController - updateBankDetails bankDetailsData ::"+bankDetailsData.isPresent());
 			logger.info("BankController - updateBankDetails bankDetailsData ::"+bankDetailsData.isPresent());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Provided bank id not avilable.");
 		}
 	}
 	

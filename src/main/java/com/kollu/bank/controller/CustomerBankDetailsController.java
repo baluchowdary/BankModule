@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kollu.bank.exception.RecordNotFoundException;
 import com.kollu.bank.model.CustomerBank;
 import com.kollu.bank.services.CustomerBankRepository;
 
@@ -70,7 +71,8 @@ public class CustomerBankDetailsController {
 		if (customerBank.isEmpty()) {
 			System.out.println("Console:: CustomerBankDetailsController - customerBank ::"+customerBank.size());
 			logger.info("CustomerBankDetailsController - customerBank ::" +customerBank.size());
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new RecordNotFoundException("Customer Bank details not avilable.");
 		}
 		return new ResponseEntity<>(customerBank, HttpStatus.OK); 
 		
@@ -98,7 +100,8 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
 			logger.info("CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 	}
 	
@@ -119,7 +122,8 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankCustById custBanksData :: "+custBanksData);
 			logger.info("CustomerBankDetailsController - getBankCustById custBanksData ::"+custBanksData);
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 	}
 	
@@ -140,7 +144,8 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd custBanksData :: "+custBanksData);
 			logger.info("CustomerBankDetailsController - getBankCustByIdd custBanksData ::"+custBanksData);
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 		
 	}

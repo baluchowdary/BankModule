@@ -85,6 +85,12 @@
    			<version>2.7.0</version>
 		</dependency>
 		
+		<!-- validation -->
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-validation</artifactId>
+    	</dependency>
+		
 	</dependencies>
 <!-- Eureka server -->
 	<dependencyManagement>
