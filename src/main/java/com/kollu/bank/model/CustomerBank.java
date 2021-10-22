@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,38 +24,50 @@ public class CustomerBank {
 	
 	
 	@Column(name="Bank_CustId")
+	@NotNull(message = "Bank Customer Id is mandatory")
 	private long bankCustId;
 
 	@Column(name="Bank_CustFirstName")
+	@NotBlank(message = "Bank Customer First Name is mandatory")
 	private String bankCustFirstName;
 	
 	@Column(name="Bank_CustLastName")
+	@NotBlank(message = "Bank Customer Last Name is mandatory")
 	private String bankCustLastName; 
 	
 	@Column(name="Bank_CustMobileNumber")
+	@NotBlank(message = "Bank Customer Mobile no is mandatory")
 	private String bankCustMobileNumber;
 	
 	@Column(name="Bank_CustGender")
+	@NotBlank(message = "Bank Customer Gender type is mandatory")
 	private String bankCustGender;
 	
 	@Column(name="Bank_CustAddress")
+	@NotBlank(message = "Bank Customer Address is mandatory")
 	private String bankCustAddress;
 	
 	
 	
 	@Column(name="Customer_BankId")
+	@NotNull(message = "Customer Bank Id is mandatory")
 	private long custBankId;
 	
 	@Column(name="CustomerBank_Name")
+	@NotBlank(message = "Customer Bank Name is mandatory")
 	private String custBankName;
 	
 	@Column(name="CustomerBank_IfscCode")
+	@NotBlank(message = "Customer Bank IFSC code is mandatory")
 	private String custBankIfscCode;
 	
 	@Column(name="CustomerBank_BranchAddress")
+	@NotBlank(message = "Customer Bank Branch Address is mandatory")
 	private String custBankBranchAddress;
 	
 	@Column(name="CustomerBank_AccountNo")
+	//@Size(max=11)
+	@NotBlank(message = "Customer Bank Account no is mandatory")
 	private String custBankAccountNo;
 
 	public CustomerBank() {

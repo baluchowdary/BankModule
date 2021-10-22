@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class CustomerBankDetailsController {
 /*Save Customer Bank details*/
 	
 	@PostMapping("/savecustbankdetails")
-	public ResponseEntity<CustomerBank> saveCustBankDetails(@RequestBody CustomerBank customerBank) {
+	public ResponseEntity<CustomerBank> saveCustBankDetails(@Valid @RequestBody CustomerBank customerBank) {
 		System.out.println("Console:: CustomerBankDetailsController - saveCustBankDetails method");
 		logger.info("CustomerBankDetailsController - saveCustBankDetails method");
 		
@@ -52,7 +54,7 @@ public class CustomerBankDetailsController {
 		} catch (Exception e) {
 			System.out.println("Console:: CustomerBankDetailsController - saveCustBankDetails - Error ::" +e.getMessage());
 			logger.error("CustomerBankDetailsController - saveCustBankDetails - Error :: " +e.getMessage());
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<CustomerBank>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -79,7 +81,7 @@ public class CustomerBankDetailsController {
 	} catch (Exception e) {
 		System.out.println("Console:: CustomerBankDetailsController - getCustBankDetails - Error ::" +e.getMessage());
 		logger.error("CustomerBankDetailsController - getCustBankDetails - Error :: " +e.getMessage());
-		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -87,7 +89,7 @@ public class CustomerBankDetailsController {
 /*	Get the customer bank details by using {bankId}*/
 	
 	@GetMapping("/{custBankId}")
-	public ResponseEntity<CustomerBank> getBankById(@PathVariable("custBankId") long id) {
+	public ResponseEntity<CustomerBank> getBankById(@Valid @PathVariable("custBankId") long id) {
 		System.out.println("Console:: CustomerBankDetailsController - getBankById method");
 		logger.info("CustomerBankDetailsController - getBankById method");
 		
@@ -100,7 +102,6 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
 			logger.info("CustomerBankDetailsController - getBankById custBanksData ispresent ::"+custBanksData.isPresent());
-			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 	}
@@ -108,7 +109,7 @@ public class CustomerBankDetailsController {
 /*	Get the customer bank details by using {bankId}*/
 	
 	@GetMapping("/bankCustById/{bankCustId}")
-	public ResponseEntity<CustomerBank> getBankCustById(@PathVariable("bankCustId") long bankCustId) {
+	public ResponseEntity<CustomerBank> getBankCustById(@Valid @PathVariable("bankCustId") long bankCustId) {
 		
 		System.out.println("Console:: CustomerBankDetailsController - getBankCustById method");
 		logger.info("CustomerBankDetailsController - getBankCustById method");
@@ -122,7 +123,6 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankCustById custBanksData :: "+custBanksData);
 			logger.info("CustomerBankDetailsController - getBankCustById custBanksData ::"+custBanksData);
-			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 	}
@@ -130,7 +130,7 @@ public class CustomerBankDetailsController {
 /*	Get the customer bank details by using {bankId}*/
 	
 	@GetMapping("/bankCustByIdd/{bankCustId}")
-	public ResponseEntity<CustomerBank> getBankCustByIdd(@PathVariable("bankCustId") long bankCustId) {
+	public ResponseEntity<CustomerBank> getBankCustByIdd(@Valid @PathVariable("bankCustId") long bankCustId) {
 		System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd method");
 		logger.info("CustomerBankDetailsController - getBankCustByIdd method"); 
 		logger.info("CustomerBankDetailsController - getBankCustByIdd bankCustId ::" +bankCustId);
@@ -144,7 +144,6 @@ public class CustomerBankDetailsController {
 		} else {
 			System.out.println("Console:: CustomerBankDetailsController - getBankCustByIdd custBanksData :: "+custBanksData);
 			logger.info("CustomerBankDetailsController - getBankCustByIdd custBanksData ::"+custBanksData);
-			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			throw new RecordNotFoundException("Provided customer bank id not avilable.");
 		}
 		

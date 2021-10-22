@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,15 +20,19 @@ public class Bank {
 	private long bankId;
 	
 	@Column(name="Bank_Name")
+	@NotBlank(message = "Bank Name is mandatory")
 	private String bankName;
 	
 	@Column(name="Bank_IFSC_Code")
+	@NotBlank(message = "Bank IFSC Code is mandatory")
 	private String bankIfscCode;
 	
 	@Column(name="Bank_Branch_Address")
+	@NotBlank(message = "Bank Branch Address is mandatory")
 	private String bankBranchAddress;
 	
 	@Column(name="BankPooling_AccountNumber")
+	@NotBlank(message = "Bank Pool Account no is mandatory")
 	private String bankPoolingAccountNumber;
 
 	public Bank() {
@@ -83,7 +88,7 @@ public class Bank {
 
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", bankIfscCode=" + bankIfscCode + ", bankBranchAddress="
+		return "Bank [bankName=" + bankName + ", bankIfscCode=" + bankIfscCode + ", bankBranchAddress="
 				+ bankBranchAddress + ", bankPoolingAccountNumber=" + bankPoolingAccountNumber + "]";
 	}
 	
