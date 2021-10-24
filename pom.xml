@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.kollu.BankModule</groupId>
 	<artifactId>bankmodule</artifactId>
-	<version>0.0.1-release</version>
+	<version>0.0.1-phase5</version>
 	<name>BankModule</name>
 	<description>BankModule SpringBoot and MicroServices project</description>
 	<properties>
