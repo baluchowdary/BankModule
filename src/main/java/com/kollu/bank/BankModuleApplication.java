@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
+import brave.sampler.Sampler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -46,12 +47,12 @@ public class BankModuleApplication {
 	
 	/*Distributed Tracing/Zipkin*/
 	
-	/*@Bean
+	@Bean
 	public Sampler defaultSampler() {
 		System.out.println("Console:: BankModuleApplication - defaultSampler method");
 		logger.info("BankModuleApplication - defaultSampler method");
 	    return Sampler.ALWAYS_SAMPLE;
-	}*/
+	}
 	
 	
 }
