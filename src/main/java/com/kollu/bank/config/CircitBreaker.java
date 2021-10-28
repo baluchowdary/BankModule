@@ -2,6 +2,7 @@ package com.kollu.bank.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,10 @@ import io.github.resilience4j.retry.annotation.Retry;
 public class CircitBreaker {
 
 	private Logger logger = LoggerFactory.getLogger(CircitBreaker.class);
+	
+	@Value("${spring.circuitbreakerTestURL}")
+	private String TestURL;
+	
 	@GetMapping("/kollu")
 	
 	//retry 5 times and each between request waiting duration 300 sec's
@@ -30,8 +35,8 @@ public class CircitBreaker {
 	public String getResponse() {
 		System.out.println("Console:: CircitBreaker - getResponse method");
 		logger.info("CircitBreaker - getResponse method"); 
-		//ResponseEntity<String> entity = new RestTemplate().getForEntity("http://localhost:87611/", String.class);
-		ResponseEntity<String> entity = new RestTemplate().getForEntity("http://172.20.10.3:87611/", String.class);
+		ResponseEntity<String> entity = new RestTemplate().getForEntity(TestURL, String.class);
+		//ResponseEntity<String> entity = new RestTemplate().getForEntity("http://172.20.10.3:87611/", String.class);
 		logger.debug("Entity Response Body :: "+ entity.getBody()); 
 		return entity.getBody(); 
 	}//end
