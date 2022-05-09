@@ -1,11 +1,21 @@
 package com.kollu.bank;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+
+import com.kollu.bank.security.entity.User;
+import com.kollu.bank.security.repository.UserRepository;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,6 +30,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class BankModuleApplication {
 
 	private static Logger logger = LoggerFactory.getLogger(BankModuleApplication.class);
+	
+	/*JWT Security*/
+	@Autowired
+    private UserRepository repository;
 	
 	public static void main(String[] args) {
 		System.out.println("Console:: i am from Bank module");
@@ -53,5 +67,22 @@ public class BankModuleApplication {
 	    return Sampler.ALWAYS_SAMPLE;
 	}*/
 	
+/*JWT Security*/
+	
+	@PostConstruct
+    public void initUsers() {
+        List<User> users = Stream.of(
+                new User(101, "kollu", "pass"),
+                new User(102, "user1", "pwd1"),
+                new User(103, "user2", "pwd2"),
+                new User(104, "user3", "pwd3")
+        ).collect(Collectors.toList());
+        repository.saveAll(users);
+    }
+	
+	/*@PreDestroy
+	public void destory() {
+		repository.deleteAll();
+	}*/
 	
 }

@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kollu.bank.exception.RecordNotFoundException;
 import com.kollu.bank.model.Bank;
+import com.kollu.bank.security.entity.AuthRequest;
+import com.kollu.bank.security.util.JwtUtil;
 import com.kollu.bank.services.BankRepository;
 
 @CrossOrigin(origins= "${reactModuleURL}")
@@ -34,6 +38,25 @@ public class BankController {
 	
 	@Autowired
 	private BankRepository bankRepository;
+	
+	/*JWT Security*/
+	@Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    
+    /*JWT Security*/
+	@PostMapping("/authenticate")
+    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
+            );
+        } catch (Exception ex) {
+            throw new Exception("inavalid username/password");
+        }
+        return jwtUtil.generateToken(authRequest.getUserName());
+    }
 	
 /*Fetch All Bank details*/
 	
